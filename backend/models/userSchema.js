@@ -2,12 +2,29 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 const userSchema = new Schema({
-  username: String,
-  email: String,
-  password: String,
+  username: {
+    type: String,
+    required: true,  
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,  
+  },
+  password: {
+    type: String,
+      
+  },
+  googleId: {
+    type: String,  
+    unique: true,  
+  },
 });
 userSchema.statics.signup = async (username, email, password) => {
     try {
+      if(!password){
+        throw new Error("Enter Password");
+      }
       if (password.length < 6) {
         throw new Error("Password length should be min 6 characters");
       }
