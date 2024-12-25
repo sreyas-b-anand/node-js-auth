@@ -21,8 +21,7 @@ passport.use(
           });
         } else if (!user.googleId) {
           user.googleId = profile.id;
-
-          user.save();
+          await user.save();
         }
         return done(null, user);
       } catch (error) {
@@ -31,9 +30,11 @@ passport.use(
     }
   )
 );
-passport.serializeUser(async (user, done) => {
-  done(null, user);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
 });
+
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
@@ -42,4 +43,6 @@ passport.deserializeUser(async (id, done) => {
     done(error, null);
   }
 });
+
 module.exports = passport;
+
