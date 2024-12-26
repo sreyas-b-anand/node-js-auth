@@ -31,11 +31,13 @@ Comprehensive error handling for invalid inputs, authentication failures, and ex
 # Setup and Installation
 * Clone the repository.
 * Install dependencies with npm install.
-* Configure the .env file with the following:
-    - JWT_SECRET
+* Configure the .env file with the following in the server:
+    - SECRET_KEY (jwt secret key)
     - GOOGLE_CLIENT_ID
     - GOOGLE_CLIENT_SECRET
     - Database connection URI (DB_URI)
+    - SESSION_SECRET (a random string)
+    - PORT (your PORT number)
 * Start the backend server with node server.js or nodemon server.js.
 * Run the frontend development server 
 
