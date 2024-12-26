@@ -5,6 +5,8 @@ const OAuthrouter = express.Router();
 OAuthrouter.get('/auth/google' , passport.authenticate('google'))
 
 OAuthrouter.get('/auth/redirect/google' , passport.authenticate('google' , {
-    successRedirect :'/',
-    failureRedirect : '/login'
+    successRedirect :'http://localhost:5173/',
+    failureRedirect : 'http://localhost:5173/login'
 }))
+
+module.exports = OAuthrouter;

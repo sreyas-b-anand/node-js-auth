@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Container, Box, Typography, TextField, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 function Login() {
+  const navigate = useNavigate();
+  const handleGoogleAuth = () => {
+    window.location.href = "http://localhost:4000/auth/google";
+  }
   const {
     register,
     handleSubmit,
@@ -10,20 +14,25 @@ function Login() {
   } = useForm();
   const [error, setError] = useState("");
   const onSubmit = async (data) => {
+    console.log(data);
     try {
-      const response = await fetch("/api/auth/signup", {
+      const response = await fetch("http://localhost:4000/api/auth/login", {//api link
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       if (!response.ok) {
-        throw new Error("An error occured");
+        const error = await response.json();
+        console.log(error);/////////////////////////////
+        setError(error);
       }
       const json = await response.json();
-      console.log(json);
+      console.log(json);/////////////////////////////
       setError(null);
+      navigate("/");
     } catch (err) {
-      setError(err);
+      console.error("Login error:", err);
+      setError(err.message);
     }
   };
 
@@ -46,21 +55,7 @@ function Login() {
         >
           Login
         </Typography>
-        <Box className="form-style">
-          <TextField
-            fullWidth
-            size="small"
-            id="outlined-basic"
-            label="username"
-            variant="outlined"
-            placeholder=" "
-            className="input-style form-input"
-            type="text"
-            {...register("username", { required: "Username is required" })}
-          />
-
-          {errors.username && <p>{errors.username.message}</p>}
-        </Box>
+        
 
         <Box className="form-style">
           <TextField
@@ -114,9 +109,7 @@ function Login() {
             OR
           </Typography>
           <Button
-            onClick={() => {
-              //OAuth route
-            }}
+            onClick={handleGoogleAuth}
             sx={{ backgroundColor: "blue", color: "white" }}
           >
             Sign in with Google

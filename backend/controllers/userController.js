@@ -22,15 +22,15 @@ const signinUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   console.log(req.method); ///////////////////////////////////////////////////////////
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
   try {
-    if (!username || !email || !password) {
+    if (!email || !password) {
       return res.status(400).json({ error: "All fields must be filled" });
     }
-    const user = await User.login(username, email, password);
+    const user = await User.login(email, password);
     const token = createToken(user._id);
 
-    res.status(200).json({ email, username, token });
+    res.status(200).json({ email, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

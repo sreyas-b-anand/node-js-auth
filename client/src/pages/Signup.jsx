@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Container, Box, Typography, TextField, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function Signup() {
+  const handleGoogleAuth = () => {
+    window.location.href = "http://localhost:4000/auth/google";
+  }
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -10,8 +14,9 @@ function Signup() {
   } = useForm();
   const [error, setError] = useState("");
   const onSubmit = async (data) => {
+    console.log(data)
     try {
-      const response = await fetch("/api/auth/signup", {
+      const response = await fetch("http://localhost:4000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -22,6 +27,7 @@ function Signup() {
       const json = await response.json();
       console.log(json);
       setError(null);
+      navigate('/')
     } catch (err) {
       setError(err);
     }
@@ -116,9 +122,7 @@ function Signup() {
           <Typography className="w-full text-center text-2xl text-black">
             OR
           </Typography>
-          <Button onClick={()=>{
-            //OAuth route
-          }} sx={{ backgroundColor: "blue", color: "white" }}>
+          <Button onClick={handleGoogleAuth}  sx={{ backgroundColor: "blue", color: "white" }}>
             Sign in with Google
           </Button>
         </Box>

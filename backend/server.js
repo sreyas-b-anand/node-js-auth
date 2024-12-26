@@ -8,6 +8,7 @@ const cors = require("cors");
 const URI = process.env.DBURI;
 const userRouter = require("./routes/userRoutes");
 const requireAuth = require("./middlewares/jwt");
+const OAuthRouter = require("./routes/OAuthRoutes");
 mongoose
   .connect(URI)
   .then(() => {
@@ -38,5 +39,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/api/auth", userRouter);
-app.use(requireAuth); ////////////////////////////////////
+app.use("/", OAuthRouter);
+//app.use(requireAuth); ////////////////////////////////////
 console.log("hdcnjxmk,"); ////////////////////////////////////////////
