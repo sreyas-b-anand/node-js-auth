@@ -14,9 +14,9 @@
 # Key Features
 * JWT-Based Authentication:
 Uses JSON Web Tokens (JWT) for stateless and secure user authentication. The JWT is issued on successful login and sent back to the client, allowing protected routes and API endpoints to verify user identity.
+
 * Google OAuth Integration:
 Allows users to authenticate using their Google accounts via OAuth. This feature simplifies user registration and login by leveraging Google's secure authentication system.
-
 
 * Passport.js Integration:
 Leverages Passport.js, a flexible and modular authentication middleware, for robust handling of authentication strategies.
@@ -30,7 +30,7 @@ Comprehensive error handling for invalid inputs, authentication failures, and ex
 
 # Setup and Installation
 * Clone the repository.
-* Install dependencies with npm install.
+* Install dependencies with npm install in both client and server.
 * Configure the .env file with the following in the server:
     - SECRET_KEY (jwt secret key)
     - GOOGLE_CLIENT_ID
@@ -39,7 +39,7 @@ Comprehensive error handling for invalid inputs, authentication failures, and ex
     - SESSION_SECRET (a random string)
     - PORT (your PORT number)
 * Start the backend server with node server.js or nodemon server.js.
-* Run the frontend development server 
+* Run the frontend development server using npm run dev
 
 # Potential Use Cases
 * Personal Projects: Build authentication for your apps.
