@@ -1,6 +1,15 @@
 
 # Node Js Authentication using JWT and passport.js 
   This project is a complete authentication system built with Node.js, designed to handle user authentication securely and efficiently. It integrates a backend API with the frontend, providing a seamless login and registration experience.
+
+
+# API Links
+* signup : http://localhost:4000/api/auth/signup 
+* login :  http://localhost:4000/api/auth/login
+* forgot password : http://localhost:4000/api/auth/forgot-password
+                  : http://localhost:4000/api/auth/reset-password/${token}
+
+
 # Tech Stack
 * Frontend
    - React Js
@@ -30,7 +39,15 @@ Comprehensive error handling for invalid inputs, authentication failures, and ex
 
 # Setup and Installation
 * Clone the repository.
-* Install dependencies with npm install in both client and server.
+* open a terminal window and do the following commands
+  ```bash
+  cd server
+  npm install
+
+* open another terminal window and do the following commands
+  ```bash
+  cd client
+  npm install
 * Configure the .env file with the following in the server:
     - SECRET_KEY (jwt secret key)
     - GOOGLE_CLIENT_ID
@@ -40,8 +57,12 @@ Comprehensive error handling for invalid inputs, authentication failures, and ex
     - PORT (your PORT number)
     - EMAIL (your email address)
     - EMAIL_PASSWORD (add an app password here for your google account)
-* Start the backend server with node server.js or nodemon server.js.
+* Start the backend server
+  ```bash
+  nodemon server
 * Run the frontend development server using npm run dev
+  ```bash
+  npm run dev
 
 # Potential Use Cases
 * Personal Projects: Build authentication for your apps.
