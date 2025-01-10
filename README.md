@@ -38,6 +38,8 @@ Comprehensive error handling for invalid inputs, authentication failures, and ex
     - Database connection URI (DB_URI)
     - SESSION_SECRET (a random string)
     - PORT (your PORT number)
+    - EMAIL (your email address)
+    - EMAIL_PASSWORD (add an app password here for your google account)
 * Start the backend server with node server.js or nodemon server.js.
 * Run the frontend development server using npm run dev
 
