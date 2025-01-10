@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate, Link } from "react-router-dom";
 import { Container, Box, Typography, TextField, Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+
 function Signup() {
-  const handleGoogleAuth = () => {
-    window.location.href = "http://localhost:4000/auth/google";
-  }
   const navigate = useNavigate();
   const {
     register,
@@ -13,30 +11,38 @@ function Signup() {
     formState: { errors },
   } = useForm();
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleGoogleAuth = () => {
+    window.location.href = "http://localhost:4000/auth/google";
+  };
+
   const onSubmit = async (data) => {
-    console.log(data)
     try {
       const response = await fetch("http://localhost:4000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!response.ok) {
-        throw new Error("An error occured");
-      }
       const json = await response.json();
-      console.log(json);
-      setError(null);
-      navigate('/')
+
+      if (!response.ok) {
+        throw new Error(json.error || "An error occurred");
+      }
+
+      setError("");
+      setSuccess("Signup successful!");
+      setTimeout(() => navigate('/'), 2000);
     } catch (err) {
-      setError(err);
+      setError(err.message || "An unexpected error occurred");
+      setSuccess("");
     }
   };
 
   return (
     <Container className="w-screen h-screen centered gap-7 flex-wrap rounded-sm text-fontcolor">
       <Box
-        component={"form"}
+        component="form"
         px={5}
         py={3}
         className="border bg-formbg flex items-start justify-start flex-col gap-5 rounded-md"
@@ -64,8 +70,7 @@ function Signup() {
             type="text"
             {...register("username", { required: "Username is required" })}
           />
-
-          {errors.username && <p className="text-black">{errors.username.message}</p>}
+          {errors.username && <p className="text-red-500">{errors.username.message}</p>}
         </Box>
 
         <Box className="form-style">
@@ -79,8 +84,7 @@ function Signup() {
             className="input-style form-input"
             {...register("email", { required: "Email is required" })}
           />
-
-          {errors.email && <p>{errors.email.message}</p>}
+          {errors.email && <p className="text-red-500">{errors.email.message}</p>}
         </Box>
 
         <Box className="form-style ">
@@ -95,15 +99,24 @@ function Signup() {
             type="password"
             {...register("password", { required: "Password is required" })}
           />
-
-          {errors.password && <p>{errors.password.message}</p>}
+          {errors.password && <p className="text-red-500">{errors.password.message}</p>}
         </Box>
 
-        {error && <p>{error.error}</p>}
+        {error && (
+          <Typography className="text-red-500 text-center w-full">
+            {error}
+          </Typography>
+        )}
+
+        {success && (
+          <Typography className="text-green-500 text-center w-full">
+            {success}
+          </Typography>
+        )}
 
         <Box className="w-full centered">
           <Button
-            className="border-blue-500 text-white bg-blue-700 hover:opacity-[50%] px-3 py-1 rounded-md  "
+            className="border-blue-500 text-white bg-blue-700 hover:opacity-[50%] px-3 py-1 rounded-md"
             type="submit"
           >
             Sign Up
@@ -113,7 +126,7 @@ function Signup() {
           <Typography>
             Already have an account?{" "}
             <u>
-              <Link to={"/login"}>login</Link>
+              <Link to="/login">login</Link>
             </u>
           </Typography>
         </Box>
@@ -122,7 +135,7 @@ function Signup() {
           <Typography className="w-full text-center text-2xl text-black">
             OR
           </Typography>
-          <Button onClick={handleGoogleAuth}  sx={{ backgroundColor: "blue", color: "white" }}>
+          <Button onClick={handleGoogleAuth} sx={{ backgroundColor: "blue", color: "white" }}>
             Sign in with Google
           </Button>
         </Box>
@@ -132,3 +145,4 @@ function Signup() {
 }
 
 export default Signup;
+
